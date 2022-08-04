@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
+import BasketItem from "../components/BasketItem"
 
-type ItemInBasket = {
+ type ItemInBasket = {
     id: number,
     title: string,
     price: number,
@@ -43,7 +44,9 @@ function Basket() {
         setBasket(basketCopy)
     }
 
-
+    //Things that need to be fixed 
+// when quantity = 0 the product still shows on the page 
+// if you click Add to Baset again for a product that is on the basket the quantity should be increased
     function updatedQuantityOnServEr (item: ItemInBasket, updatedQuantity: number){
         fetch(`http://localhost:4000/basket/${item.id}`, {
             method: "PATCH",
@@ -69,34 +72,8 @@ function Basket() {
             <h2>Your Basket</h2>
             <ul>
                 {basket.map(itemInBasket =>
-                    <li key={itemInBasket.id}>
-                        <article className="basket-container__item">
-                            <img
-                                src={itemInBasket.image}
-                                alt={itemInBasket.title}
-                                width="90"
-                            />
-                            <p>{itemInBasket.title}</p>
-                            <p>
-                                Qty:
-                                <select 
-                                defaultValue={itemInBasket.quantity}
-                                onChange={e => {
-                                    updatedQuantityOnServEr(itemInBasket, Number(e.target.value))
-                                }}
-                                >
-                                    <option value="0">0</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                </select>
-
-                            </p>
-                           
-                            <p>Item total: £{(itemInBasket.price * itemInBasket.quantity).toFixed(2)}</p>
-                        </article>
-                    </li>
-                    )}
+                    
+                   <BasketItem key={itemInBasket.id} itemInBasket={itemInBasket} updatedQuantityOnServEr={updatedQuantityOnServEr} /> )}
             </ul>
          
             <h3>Your total: £{getTotalPrice(basket)}</h3>
