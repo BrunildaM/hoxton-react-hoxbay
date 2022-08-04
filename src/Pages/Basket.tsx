@@ -44,6 +44,26 @@ function Basket() {
     }
 
 
+    function updatedQuantityOnServEr (item: ItemInBasket, updatedQuantity: number){
+        fetch(`http://localhost:4000/basket/${item.id}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ quantity:  updatedQuantity})
+        })
+            .then(resp => resp.json())
+            .then(() => {
+                changeQuantity(item, updatedQuantity)
+            })
+
+
+    }
+
+  
+    
+
+
     return (
         <section className="basket-container">
             <h2>Your Basket</h2>
@@ -62,7 +82,7 @@ function Basket() {
                                 <select 
                                 defaultValue={itemInBasket.quantity}
                                 onChange={e => {
-                                    changeQuantity(itemInBasket, Number(e.target.value))
+                                    updatedQuantityOnServEr(itemInBasket, Number(e.target.value))
                                 }}
                                 >
                                     <option value="0">0</option>
@@ -78,7 +98,7 @@ function Basket() {
                     </li>
                     )}
             </ul>
-            {/* <!-- Basket total is calculated using each item's total from above --> */}
+         
             <h3>Your total: £{getTotalPrice(basket)}</h3>
         </section>
     )

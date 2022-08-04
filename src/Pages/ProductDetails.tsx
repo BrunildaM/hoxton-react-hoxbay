@@ -34,11 +34,9 @@ function ProductDetails() {
             body: JSON.stringify({ ...product, quantity: 1 })
         })
             .then(resp => resp.json())
-            .then(() => {
-                navigate('/basket')
-            })
-
+            navigate('/basket')
     }
+           
 
 
 
