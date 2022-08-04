@@ -11,9 +11,11 @@ function Header() {
         ["--random-colour"]: `var(--${randomColor})`
       }}
     >
+      <Link to='./'>
       <div className="header__logo" style={{ color: randomColor }}>
         Hoxbay
       </div>
+      </Link> 
       <nav className="header__nav">
         <ul>
           <li>
