@@ -11,8 +11,9 @@ type Product ={
   }
 
 function ProductDetails() {
-    const params = useParams()
+    
     const [product, SetProduct] = useState(null)
+    const params = useParams()
 
     useEffect(() => {
         fetch(`http://localhost:4000/products/${params.id}`)
