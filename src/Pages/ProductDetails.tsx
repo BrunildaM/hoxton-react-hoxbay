@@ -1,22 +1,41 @@
+import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
+
+type Product ={
+    id: number,
+      title: string,
+      price: number,
+      description: string,
+      categoryId: number,
+      image: string
+  }
 
 function ProductDetails() {
     const params = useParams()
+    const [product, SetProduct] = useState(null)
+
+    useEffect(() => {
+        fetch(`http://localhost:4000/products/${params.id}`)
+        .then(resp => resp.json())
+        .then(productToDisplay => SetProduct(productToDisplay))
+    }, [])
+
+
+    if ((product) === null) return <p>Select one product</p>
 
     return (
         <section className="product-detail main-wrapper">
             <img
-                src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"
-                alt="Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops"
+                src={product.image}
+                alt={product.title}
             />
             <div className="product-detail__side" style={{ borderColor: 'var(--yellow)' }}>
                 <h3></h3>
-                <h2>Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops</h2>
+                <h2>{product.title}</h2>
                 <p>
-                    Your perfect pack for everyday use and walks in the forest. Stash your
-                    laptop (up to 15 inches) in the padded sleeve, your everyday
+                    {product.description}
                 </p>
-                <p>£109.95</p>
+                <p>£{product.price}</p>
                 {/* <!-- Once you click in this button, the user should be redirected to the Basket page --> */}
                 <button>Add to basket</button>
             </div>

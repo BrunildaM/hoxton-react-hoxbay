@@ -16,7 +16,7 @@ type Props = {
 function SingleProduct ( { product }: Props) {
     return (
         <li>
-        <Link to="/products/1">
+        <Link to={`/products/${product.id}`}>
             <article className="product-item">
             <img
               src={product.image}
